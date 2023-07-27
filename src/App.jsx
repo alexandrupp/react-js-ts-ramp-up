@@ -1,15 +1,17 @@
 import React from "react";
-// import { TodoList } from "./TodoList";
 import { Name } from "./Name";
-import { TodoListClass } from "./TodoListClass";
+import { NameWithChildern } from "./NameWithChildren";
+import { TodoListItemFunction } from "./TodoListItemFunction";
+import { TodoListItemClass } from "./TodoListClass";
 
 function App() {
   return (
     <div>
-      <h1>Todo List</h1>
-      {/* <TodoList /> */}
-      <Name />
-      <TodoListClass />
+      <Name name="Alex" isProgrammer={true} />
+      <NameWithChildern>Alex</NameWithChildern>
+
+      <TodoListItemFunction isComplete>Gardening</TodoListItemFunction>
+      <TodoListItemClass>Take out trash</TodoListItemClass>
     </div>
   );
 }

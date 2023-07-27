@@ -1,7 +1,8 @@
-import React from "react";
-
-export class Name extends React.Component {
-  render() {
-    return <h1>Alex Pop</h1>;
-  }
+export function Name({ name, age = 27, isProgrammer }) {
+  return (
+    <div>
+      {name} is {age} years old. He is {isProgrammer ? "" : " not"} a
+      programmer.
+    </div>
+  );
 }
