@@ -1,15 +1,17 @@
 import React from "react";
+// import { TodoList } from "./TodoList";
+import { Name } from "./Name";
+import { TodoListClass } from "./TodoListClass";
 
 function App() {
-  // return <label>{2 + 2}</label>;
-  // return <input type="text"></input>;
-  // const myCustomLabel = <label htmlFor="inputId">anyText</label>;
-  // return (
-  //   <div id="largeDiv" className="large">
-  //     {myCustomLabel}
-  //     <input id="inputId" type="number" defaultValue={3}></input>
-  //   </div>
-  // );
+  return (
+    <div>
+      <h1>Todo List</h1>
+      {/* <TodoList /> */}
+      <Name />
+      <TodoListClass />
+    </div>
+  );
 }
 
 export default App;
