@@ -1,21 +1,14 @@
-import React from "react";
-import { Name } from "./Name";
-import { NameWithChildern } from "./NameWithChildren";
-import { TodoListItemFunction } from "./TodoListItemFunction";
-import { TodoListItemClass } from "./TodoListClass";
+import "./styles.css";
+import user from "./user.json";
+import img from "./code.png";
 
 function App() {
   return (
     <div>
-      <Name name="Alex" isProgrammer={true} />
-      <NameWithChildern>Alex</NameWithChildern>
-
-      <TodoListItemFunction isComplete>Gardening</TodoListItemFunction>
-      <TodoListItemClass>Take out trash</TodoListItemClass>
+      <h1>{JSON.stringify(user)}</h1>
+      <img src={img} />
     </div>
   );
 }
 
 export default App;
-
-<div></div>;
