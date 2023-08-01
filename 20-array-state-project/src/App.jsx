@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function App() {
   const [array, setArray] = useState(["A", "B", "C"]);
   const [letter, setLetter] = useState("");
+  const [index, setIndex] = useState(0);
 
   const removeFirstElement = () => {
     setArray((currentArray) => {
@@ -36,40 +37,70 @@ export default function App() {
     setArray(() => ["A", "B", "C"]);
   };
 
-  /* TODO:
-   * 1. Add the ability to update all `A` elements in the array to `H`
-   * 2. Add an input that is connected to state and a button that will add the input value to the start of the array
-   * 3. Add the ability to add a new element at any index in the array
-   */
+  const updateAWithH = () => {
+    setArray((currentArray) => {
+      return currentArray.map((element) => {
+        return element === "A" ? "H" : element;
+      });
+    });
+  };
+
+  const addElementAtIndex = () => {
+    setArray((currentArray) => {
+      return [
+        ...currentArray.slice(0, index),
+        letter,
+        ...currentArray.slice(index),
+      ];
+    });
+  };
 
   return (
     <div>
-      <div>My array: {array.join(", ")}</div>
-      <br />
-      <div>Actions:</div>
-      <button onClick={removeFirstElement}>Remove First Element</button>
-      <button onClick={clearArray}>Clear Array</button>
-      <button onClick={resetArrayToInitialValue}>
-        Reset Array To Initial Value
-      </button>
-      <br />
-      <br />
-      <div>Input actions:</div>
-      <input
-        type="text"
-        defaultValue={letter}
-        onChange={(e) => setLetter(e.target.value)}
-      />
-      <br />
-      <br />
-      <button onClick={removeSpecificElement}>Remove Specific Letter</button>
-      <button onClick={addElementAtStartOfArray}>
-        Add Element at Start of Array
-      </button>
-      <button onClick={addElementAtEndOfArray}>
-        Add Element at End of Array
-      </button>
-      <br />
+      <div>
+        <p>My array: {array.join(", ")}</p>
+      </div>
+      <div>
+        <p>Actions:</p>
+        <button onClick={removeFirstElement}>Remove First Element</button>
+        <button onClick={clearArray}>Clear Array</button>
+        <button onClick={resetArrayToInitialValue}>
+          Reset Array To Initial Value
+        </button>
+        <button onClick={updateAWithH}>Update A with H</button>
+      </div>
+      <div>
+        <p>Input actions:</p>
+        <label htmlFor="inputLetter">
+          Input Letter:
+          <input
+            type="text"
+            defaultValue={letter}
+            onChange={(event) => setLetter(event.target.value)}
+          />
+        </label>
+        <label>
+          Input Index:
+          <input
+            type="text"
+            pattern="[0-9]*"
+            defaultValue={0}
+            onChange={(event) => setIndex(event.target.value)}
+          />
+        </label>
+        <br />
+        <button onClick={removeSpecificElement}>Remove Specific Letter</button>
+        <button onClick={addElementAtStartOfArray}>
+          Add Element at Start of Array
+        </button>
+        <button onClick={addElementAtEndOfArray}>
+          Add Element at End of Array
+        </button>
+      </div>
+      <div>
+        <p>Add element at index</p>
+        <button onClick={addElementAtIndex}>Add Element at Index</button>
+      </div>
     </div>
   );
 }
