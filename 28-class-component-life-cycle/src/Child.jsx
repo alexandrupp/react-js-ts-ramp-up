@@ -7,7 +7,28 @@ export class Child extends React.Component {
       name: "Alex",
       age: 24,
     };
+
+    this.handleDocumentClick = () => {
+      console.log(this.state.name);
+    };
   }
+
+  componentDidMount() {
+    console.log("Mount");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.name !== this.state.name) {
+      document.removeEventListener("click", this.handleDocumentClick);
+      document.addEventListener("click", this.handleDocumentClick);
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleDocumentClick);
+    console.log("Unmount");
+  }
+
   render() {
     return (
       <div>
