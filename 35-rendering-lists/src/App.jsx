@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 export default function App() {
   const [items, setItems] = useState([
@@ -13,19 +13,22 @@ export default function App() {
   };
 
   return (
-    <div>
+    // <> </> == <Fragment> </Fragment>; <Fragment> can take key argument
+    <>
       <button onClick={addItem}>Add Item</button>
       <pre>
         {items.map((item) => (
           /* keys must be used where you are actually using the element, not in
            * its definition
            */
-          <div key={item.id}>
+          // <> </> == <Fragment> </Fragment>; <Fragment> can take key argument
+          <Fragment key={item.id}>
             {item.name}
             <input type="text" />
-          </div>
+            <br />
+          </Fragment>
         ))}
       </pre>
-    </div>
+    </>
   );
 }
