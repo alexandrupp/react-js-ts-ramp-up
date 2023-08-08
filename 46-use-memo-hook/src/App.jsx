@@ -8,8 +8,8 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  /* only use useMemo() for performance gains when computing large pieces of
-   * information
+  /* useMemo() memorizes a value. Only use it for performance gains when
+   * computing large pieces of information
    */
   const filteredList = useMemo(() => {
     return LIST.filter((n) => n.toString().includes(query));
