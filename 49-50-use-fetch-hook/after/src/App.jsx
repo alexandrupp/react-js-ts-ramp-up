@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { useFetch } from "./useFetch";
 
-// If the API does not work use these local URLs
-// const URLS = {
-//   USERS: "users.json",
-//   POSTS: "posts.json",
-//   COMMENTS: "comments.json",
-// }
-
 const URLS = {
   USERS: "https://jsonplaceholder.typicode.com/users",
   POSTS: "https://jsonplaceholder.typicode.com/posts",
@@ -21,14 +14,14 @@ const URLS = {
 //   headers: {
 //     "Content-type": "application/json",
 //   },
-// }
+// };
 
 function App() {
   const [url, setUrl] = useState(URLS.USERS);
 
-  const { data, isLoading, isError } = useFetch(url);
+  const { data, isError, isLoading } = useFetch(url);
   // BONUS:
-  // const { data, isLoading, isError } = useFetch(url, OPTIONS)
+  // const { data, isLoading, isError } = useFetch(url, OPTIONS);
 
   return (
     <>
