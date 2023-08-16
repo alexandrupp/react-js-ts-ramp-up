@@ -25,6 +25,12 @@ function reducer(state, { type, payload }) {
           id: crypto.randomUUID(),
         },
       ];
+    case ACTIONS.UPDATE:
+      return state.map((todo) => {
+        if (todo.id === payload.id) return { ...todo, name: payload.name };
+
+        return todo;
+      });
     case ACTIONS.TOGGLE:
       return state.map((todo) => {
         if (todo.id === payload.id)
@@ -59,6 +65,10 @@ function App() {
     dispatch({ type: ACTIONS.ADD, payload: { name } });
   }
 
+  function updateTodo(id, name) {
+    dispatch({ type: ACTIONS.UPDATE, payload: { id, name } });
+  }
+
   function toggleTodo(todoId, completed) {
     dispatch({ type: ACTIONS.TOGGLE, payload: { id: todoId, completed } });
   }
@@ -69,7 +79,13 @@ function App() {
 
   return (
     <TodoContext.Provider
-      value={{ todos: filteredTodos, addNewTodo, toggleTodo, deleteTodo }}
+      value={{
+        todos: filteredTodos,
+        updateTodo,
+        addNewTodo,
+        toggleTodo,
+        deleteTodo,
+      }}
     >
       <TodoFilterForm
         name={filterName}
