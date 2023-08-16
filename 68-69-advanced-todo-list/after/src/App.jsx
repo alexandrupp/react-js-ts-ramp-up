@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
 import { TodoItem } from "./TodoItem";
 
+const LOCAL_STORAGE_KEY = "TODOS";
+
 function App() {
   const [newTodoName, setNewTodoName] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || [])
+  );
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+  }, [todos]);
 
   function addNewTodo() {
     if (newTodoName === "") return;
