@@ -1,14 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import "./styles.css";
 import { TodoItem } from "./TodoItem";
 
 const LOCAL_STORAGE_KEY = "TODOS";
 
+const ACTIONS = {
+  ADD: "ADD",
+  UPDATE: "UPDATE",
+  TOGGLE: "TOGGLE",
+  DELETE: "DELETE",
+};
+
+function reducer(state, { type, payload }) {
+  switch (type) {
+    case ACTIONS.ADD:
+      return [
+        ...state,
+        {
+          name: payload.name,
+          completed: false,
+          id: crypto.randomUUID(),
+        },
+      ];
+    case ACTIONS.TOGGLE:
+      return state.map((todo) => {
+        if (todo.id === payload.id)
+          return { ...todo, completed: payload.completed };
+
+        return todo;
+      });
+    case ACTIONS.DELETE:
+      return state.filter((todo) => todo.id !== payload.id);
+    default:
+      throw new Error(`No action found for ${type}`);
+  }
+}
+
 function App() {
   const [newTodoName, setNewTodoName] = useState("");
-  const [todos, setTodos] = useState(
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || [])
-  );
+  const [todos, dispatch] = useReducer(reducer, [], (initialValue) => {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValue;
+  });
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
@@ -17,29 +49,16 @@ function App() {
   function addNewTodo() {
     if (newTodoName === "") return;
 
-    setTodos((currentTodos) => {
-      return [
-        ...currentTodos,
-        { name: newTodoName, completed: false, id: crypto.randomUUID() },
-      ];
-    });
+    dispatch({ type: ACTIONS.ADD, payload: { name: newTodoName } });
     setNewTodoName("");
   }
 
   function toggleTodo(todoId, completed) {
-    setTodos((currentTodos) => {
-      return currentTodos.map((todo) => {
-        if (todo.id === todoId) return { ...todo, completed };
-
-        return todo;
-      });
-    });
+    dispatch({ type: ACTIONS.TOGGLE, payload: { id: todoId, completed } });
   }
 
   function deleteTodo(todoId) {
-    setTodos((currentTodos) => {
-      return currentTodos.filter((todo) => todo.id !== todoId);
-    });
+    dispatch({ type: ACTIONS.DELETE, payload: { id: todoId } });
   }
 
   return (
