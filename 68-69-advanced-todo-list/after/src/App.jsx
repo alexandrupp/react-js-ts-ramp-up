@@ -1,6 +1,7 @@
 import { useState, useEffect, useReducer } from "react";
 import "./styles.css";
 import { TodoItem } from "./TodoItem";
+import { NewTodoForm } from "./NewTodoFrom";
 
 const LOCAL_STORAGE_KEY = "TODOS";
 
@@ -37,7 +38,6 @@ function reducer(state, { type, payload }) {
 }
 
 function App() {
-  const [newTodoName, setNewTodoName] = useState("");
   const [todos, dispatch] = useReducer(reducer, [], (initialValue) => {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || initialValue;
   });
@@ -46,11 +46,8 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  function addNewTodo() {
-    if (newTodoName === "") return;
-
-    dispatch({ type: ACTIONS.ADD, payload: { name: newTodoName } });
-    setNewTodoName("");
+  function addNewTodo(name) {
+    dispatch({ type: ACTIONS.ADD, payload: { name } });
   }
 
   function toggleTodo(todoId, completed) {
@@ -76,16 +73,7 @@ function App() {
         })}
       </ul>
 
-      <div id="new-todo-form">
-        <label htmlFor="todo-input">New Todo</label>
-        <input
-          type="text"
-          id="todo-input"
-          value={newTodoName}
-          onChange={(e) => setNewTodoName(e.target.value)}
-        />
-        <button onClick={addNewTodo}>Add Todo</button>
-      </div>
+      <NewTodoForm addNewTodo={addNewTodo} />
     </>
   );
 }
